@@ -480,11 +480,11 @@ function obtain_calculate_rename_upload() {
         mv "${1}" "${the_file_final_path}"
     fi
 
-    if [[ -z "${NO_S3}" ]]; then
+    if [[ -n "${ENABLE_S3}" ]]; then
         upload_to_s3 "${the_file_final_path}"
     fi
 
-    if [[ -z "${NO_AZURE}" ]]; then
+    if [[ -n "${ENABLE_AZURE}" ]]; then
         upload_to_azure "${the_file_final_path}"
     fi
 
@@ -508,11 +508,11 @@ function main() {
 
     output_mp4_base_path="/SL-downloads/${output_file_basename}.mp4"
 
-    if [[ -z "${NO_S3}" ]]; then
+    if [[ -n "${ENABLE_S3}" ]]; then
         init_s3
     fi
 
-    if [[ -z "${NO_AZURE}" ]]; then
+    if [[ -n "${ENABLE_AZURE}" ]]; then
         init_azure
     fi
 
