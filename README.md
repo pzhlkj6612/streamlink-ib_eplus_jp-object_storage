@@ -191,8 +191,8 @@ services:
 
       # uploading control
 
-      - NO_S3=               # disable s3cmd.
-      - NO_AZURE=            # disable azure-cli.
+      - ENABLE_S3=           # enable s3cmd.
+      - ENABLE_AZURE=        # enable azure-cli.
 
       # s3cmd
       - AWS_ACCESS_KEY_ID=
