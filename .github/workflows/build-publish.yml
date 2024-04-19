@@ -46,13 +46,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       -
-        name: Log in to ACR
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d  # v3.0.0
-        with:
-          registry: registry.cn-hangzhou.aliyuncs.com
-          username: "${{ secrets.ACR_USERNAME }}"
-          password: "${{ secrets.ACR_PASSWORD }}"
-      -
         name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@96383f45573cb7f253c731d3b3ab81c87ef81934  # v5.0.0
@@ -60,7 +53,6 @@ jobs:
           images: |
             ${{ github.repository_owner }}/${{ steps.repo-name.outputs.output }}
             ghcr.io/${{ github.repository }}
-            registry.cn-hangzhou.aliyuncs.com/github_actions-pzhlkj6612/${{ steps.repo-name.outputs.output }}
           tags: ${{ github.event_name == 'push' && (github.ref_name == 'mian' && 'latest' || 'unstable') || '' }}
       -
         name: Build and push Docker images
