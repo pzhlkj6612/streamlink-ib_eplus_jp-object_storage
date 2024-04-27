@@ -34,8 +34,8 @@ RUN pip install \
 #   https://stackoverflow.com/a/43136160
 RUN mkdir '/SL-plugins' && \
     git -C '/SL-plugins' init && \
-    git -C '/SL-plugins' remote add 'origin' 'https://github.com/code-with-IPID/streamlink-plugins.git' && \
-    git -C '/SL-plugins' fetch --depth=1 'origin' '10c3c5d7727326db624a50e360eef5fce567c8cd' && \
+    git -C '/SL-plugins' remote add 'origin' 'https://github.com/pmrowla/streamlink-plugins.git' && \
+    git -C '/SL-plugins' fetch --depth=1 'origin' '4d8c40e7311f97440c32788f419a6d9144622c67' && \
     git -C '/SL-plugins' switch --detach 'FETCH_HEAD'
 
 RUN mkdir '/opt/ffmpeg' && \
