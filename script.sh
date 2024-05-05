@@ -126,14 +126,13 @@ else
     )
 fi
 
-ffmpeg_stdin_mpegts_transcode_flv_rtmp_no_target_url_partial_command=(
+ffmpeg_stdin_stream_transcode_flv_rtmp_no_target_url_partial_command=(
     # ffmpeg - Explanation of x264 tune - Super User
     #   https://superuser.com/q/564402
 
     'ffmpeg'
         "${ffmpeg_common_global_arguments[@]}"
         '-re'
-        '-f' 'mpegts'
         '-i' '-'
         '-c:a' 'copy'
         "${ffmpeg_video_encoding_arguments[@]}"
@@ -191,12 +190,12 @@ function process_stream_and_video() {
         1>"${in_pipe}" \
         "${ytdlp_record_stdout_command[@]}" &
 
-    elif [[ -n "${MPEG_TS_VIDEO_FILE_URL}" ]]; then
-        # curl --(.ts)-> pipe
+    elif [[ -n "${VIDEO_FILE_URL}" ]]; then
+        # curl -> pipe
 
         curl_download_stdout_command=(
             "${curl_download_stdout_no_url_partial_command[@]}"
-            "${MPEG_TS_VIDEO_FILE_URL}"
+            "${VIDEO_FILE_URL}"
         )
 
         1>"${in_pipe}" \
@@ -229,7 +228,7 @@ function process_stream_and_video() {
         # pipe ->(.ts)
 
         if [[ -f "${1}" ]]; then
-            echo "MPEG-TS file exists, no overwriting it."
+            echo "File exists, no overwriting it. Path: ${1}"
             exit 3
         fi
 
@@ -245,10 +244,10 @@ function process_stream_and_video() {
     fi
 
     if [[ -n "${RTMP_TARGET_URL}" ]]; then
-        # pipe --(.ts)-> ffmpeg --(.flv)-> rtmp
+        # pipe -> ffmpeg --(.flv)-> rtmp
 
-        ffmpeg_stdin_mpegts_transcode_flv_rtmp_command=(
-            "${ffmpeg_stdin_mpegts_transcode_flv_rtmp_no_target_url_partial_command[@]}"
+        ffmpeg_stdin_stream_transcode_flv_rtmp_command=(
+            "${ffmpeg_stdin_stream_transcode_flv_rtmp_no_target_url_partial_command[@]}"
             "${RTMP_TARGET_URL}"
         )
 
@@ -256,7 +255,7 @@ function process_stream_and_video() {
         mkfifo --mode=600 "${rtmp_ts_pipe}"
 
         0<"${rtmp_ts_pipe}" \
-        "${ffmpeg_stdin_mpegts_transcode_flv_rtmp_command[@]}" &
+        "${ffmpeg_stdin_stream_transcode_flv_rtmp_command[@]}" &
 
         out_pipes+=("${rtmp_ts_pipe}")
 
@@ -311,17 +310,16 @@ function process_stream_and_video() {
         # (.ts)-> ffmpeg ->(.mp4)
         # should be a seekable MP4 video
 
-        ffmpeg_mpegts_file_copy_mp4_file_command=(
+        ffmpeg_video_file_copy_mp4_file_command=(
             'ffmpeg'
                 "${ffmpeg_common_global_arguments[@]}"
-                '-f' 'mpegts'
                 '-i' "${1}"
                 '-c' 'copy'
                 '-f' 'mp4'
                 "${2}"
         )
 
-        "${ffmpeg_mpegts_file_copy_mp4_file_command[@]}"
+        "${ffmpeg_video_file_copy_mp4_file_command[@]}"
 
     elif [[ -n "${GENERATE_DUMMY_MP4}" ]]; then
         # text ->(.mp4)
@@ -504,6 +502,7 @@ function main() {
         output_file_basename="${the_datetime}.${output_file_basename}"
     fi
 
+    # It could be a MKV. PLease believe our media player.
     output_ts_base_path="/SL-downloads/${output_file_basename}.ts"
 
     output_mp4_base_path="/SL-downloads/${output_file_basename}.mp4"
