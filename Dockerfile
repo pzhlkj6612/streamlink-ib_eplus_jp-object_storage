@@ -34,12 +34,12 @@ RUN pip install \
 #   https://stackoverflow.com/a/43136160
 RUN mkdir '/SL-plugins' && \
     git -C '/SL-plugins' init && \
-    git -C '/SL-plugins' remote add 'origin' 'https://github.com/pmrowla/streamlink-plugins.git' && \
-    git -C '/SL-plugins' fetch --depth=1 'origin' '4d8c40e7311f97440c32788f419a6d9144622c67' && \
+    git -C '/SL-plugins' remote add 'origin' 'https://github.com/code-with-IPID/streamlink-plugins.git' && \
+    git -C '/SL-plugins' fetch --depth=1 'origin' '93c4aa86696741f7e934820b94761b41ed69dbd3' && \
     git -C '/SL-plugins' switch --detach 'FETCH_HEAD'
 
 RUN mkdir '/opt/ffmpeg' && \
-    curl -L 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-04-25-12-53/ffmpeg-n7.0-18-g96d941b30e-linux64-gpl-7.0.tar.xz' | \
+    curl -L 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-05-05-12-46/ffmpeg-n7.0-25-ga51c06b42c-linux64-gpl-7.0.tar.xz' | \
         tar -C '/opt/ffmpeg' -f- -x --xz --strip-components=1
 
 ENV PATH="/opt/ffmpeg/bin:${PATH}"
