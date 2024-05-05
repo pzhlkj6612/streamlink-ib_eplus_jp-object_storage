@@ -135,7 +135,7 @@ services:
       - NO_AUTO_FILESIZE=
       - NO_AUTO_MD5=
 
-      # MPEG-TS input control
+      # Input control
       # only one input allowed; using file has the highest priority.
 
       # file
@@ -167,16 +167,16 @@ services:
       - YTDLP_OPTIONS=         # options passed into yt-dlp before all others.
 
       # direct download
-      - MPEG_TS_VIDEO_FILE_URL=  # download a MPEG-TS video.
+      - VIDEO_FILE_URL=  # download a video file.
 
       # ffmpeg
       - GENERATE_STILL_IMAGE_MPEG_TS=  # generate a still image MPEG-TS video.
 
-      # MPEG-TS output control
+      # Output control
       # multiple outputs supported.
 
       # file
-      - NO_DOWNLOAD_TS=  # do not save the MPEG-TS file.
+      - NO_DOWNLOAD_TS=  # do not save the video file. it may not be a MPEG-TS file, but a MKV one.
 
       # rtmp
       - RTMP_TARGET_URL=     # enable RTMP streaming.
