@@ -22,7 +22,7 @@ RUN pip install \
         --disable-pip-version-check \
         --no-cache-dir \
         --force-reinstall \
-        'https://github.com/streamlink/streamlink/archive/abf230fe69c373c262fff69797e946fb03a21e15.zip'
+        'https://github.com/streamlink/streamlink/archive/21569979c4c53061245b02862b5fbd9b42654639.zip'
 
 RUN pip install \
         --disable-pip-version-check \

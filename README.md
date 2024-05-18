@@ -113,7 +113,7 @@ Environment variables:
 
 #### Docker
 
-Install [Docker Engine](https://docs.docker.com/engine/). I recommend that you use [Compose V2](https://docs.docker.com/compose/#compose-v2-and-the-new-docker-compose-command) by executing the new [`docker compose`](https://docs.docker.com/engine/reference/commandline/compose/) command.
+Install [Docker Engine](https://docs.docker.com/engine/) and use the [`docker compose`](https://docs.docker.com/engine/reference/commandline/compose/) command to manipulate Docker Compose.
 
 Create a service:
 
@@ -220,9 +220,7 @@ $ docker compose up sl
 For developers who want to build the image themselves:
 
 ```console
-$ DOCKER_BUILDKIT=1 docker build --tag ${tag} .
-  ^^^^^^^^^^^^^^^^^
-     !important!
+$ docker build --tag ${tag} .
 
 ```
 
