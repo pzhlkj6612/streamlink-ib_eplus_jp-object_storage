@@ -281,7 +281,7 @@ $ podman build --tag ${tag} .
   - [streamlink/streamlink](https://github.com/streamlink/streamlink) and [pmrowla/streamlink-plugins](https://github.com/pmrowla/streamlink-plugins).
   - [yt-dlp/yt-dlp](https://github.com/yt-dlp/yt-dlp)
   - [BtbN/FFmpeg-Builds](https://github.com/BtbN/FFmpeg-Builds).
-  - I'm using [shell-format - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=foxundermoon.shell-format) to format my bash shell script.
+  - I used to format my bash shell script with [shell-format - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=foxundermoon.shell-format).
 - Platforms:
   - AWS, DigitalOcean, Linode, Vultr and DreamHost.
   - Microsoft Azure.
