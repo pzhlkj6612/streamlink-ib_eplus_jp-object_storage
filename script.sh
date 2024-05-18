@@ -149,7 +149,6 @@ ffmpeg_stdin_stream_transcode_flv_rtmp_no_target_url_partial_command=(
 
 #
 # $1: output_ts_base_path
-# $2: output_mp4_base_path
 #
 function process_stream_and_video() {
     echo '------ vvvvvv process stream and video vvvvvv'
@@ -302,35 +301,6 @@ function process_stream_and_video() {
     if [[ "${output_number}" -eq '0' ]]; then
         echo "no output specified."
         exit 5
-    fi
-
-    # Produce MP4
-
-    if [[ -z "${NO_TRANSCODE}" ]]; then
-        # (.ts)-> ffmpeg ->(.mp4)
-        # should be a seekable MP4 video
-
-        ffmpeg_video_file_copy_mp4_file_command=(
-            'ffmpeg'
-                "${ffmpeg_common_global_arguments[@]}"
-                '-i' "${1}"
-                '-c' 'copy'
-                '-f' 'mp4'
-                "${2}"
-        )
-
-        "${ffmpeg_video_file_copy_mp4_file_command[@]}"
-
-    elif [[ -n "${GENERATE_DUMMY_MP4}" ]]; then
-        # text ->(.mp4)
-
-        if [[ -f "${2}" ]]; then
-            echo "MP4 file exists, no overwriting it."
-            exit 4
-        fi
-
-        echo "${2}" 1>"${2}"
-
     fi
 
     echo '------ ^^^^^^ process stream and video ^^^^^^'
@@ -505,8 +475,6 @@ function main() {
     # It could be a MKV. PLease believe our media player.
     output_ts_base_path="/SL-downloads/${output_file_basename}.ts"
 
-    output_mp4_base_path="/SL-downloads/${output_file_basename}.mp4"
-
     if [[ -n "${ENABLE_S3}" ]]; then
         init_s3
     fi
@@ -515,11 +483,9 @@ function main() {
         init_azure
     fi
 
-    process_stream_and_video "${output_ts_base_path}" "${output_mp4_base_path}"
+    process_stream_and_video "${output_ts_base_path}"
 
     obtain_calculate_rename_upload "${output_ts_base_path}"
-
-    obtain_calculate_rename_upload "${output_mp4_base_path}"
 }
 
 # ENTRYPOINT #

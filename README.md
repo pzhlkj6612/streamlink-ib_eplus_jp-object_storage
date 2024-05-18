@@ -4,26 +4,31 @@
 
 ## What does this docker image do
 
-- Download the live streaming or VOD from [eplus - Japan most famous ticket play-guide](https://ib.eplus.jp/) via Streamlink or yt-dlp.
-- Transcode the downloaded TS file to MP4 via FFmpeg.
-- Upload both the TS and MP4 files to S3-compatible object storage via S3cmd or to Azure Storage container via Azure CLI.
+- Download the live streaming or VOD from [eplus](https://ib.eplus.jp/) and other websites via Streamlink or yt-dlp.
+- Upload the video file to S3-compatible object storage via S3cmd or to Azure Storage container via Azure CLI.
 
 ## Details
 
 ### Storage requirement
 
-For a 4-hour live event, the size of a MPEG-TS recording with the best quality is about 9.88 GB (9.2 GiB). Since we may transcode MPEG-TS to MP4 (a bit smaller) and keep both files, 20 GB free disk space is required.
+For a 4-hour live event, the size of a MPEG-TS recording with the best quality is about 9.88 GB (9.2 GiB).
+
+### Downloader support
+
+The yt-dlp support is experiment.
 
 ### Output
 
-All output files are located in the "/SL-downloads" directory in the container. You are able to access those files locally by mounting a volume into that directory **before** creating the container (otherwise you may have to play with anonymous volumes).
+The output file is in ".ts" format. I believe that your media player is smart enough to get to know the actual codec.
 
-Intermediate files. Those files will be renamed to "final files" before being uploaded:
+The file is located in the "/SL-downloads" directory in the container. You are able to access those files by mounting a volume into that directory **before** creating the container (otherwise you may have to play with [`docker cp`](https://docs.docker.com/reference/cli/docker/container/cp/) or anonymous volumes).
+
+You will see some intermediate files. Those files will be renamed to "final files" finally:
 
 ```shell
 # template:
-${datetime}.${OUTPUT_FILENAME_BASE}.{ts,mp4} # full
-${OUTPUT_FILENAME_BASE}.{ts,mp4}             # NO_AUTO_PREFIX_DATETIME
+${datetime}.${OUTPUT_FILENAME_BASE}.ts # full
+${OUTPUT_FILENAME_BASE}.ts             # NO_AUTO_PREFIX_DATETIME
 
 # example:
 '20220605T040302Z.name-1st-Otoyk-day0.ts' # full
@@ -35,10 +40,10 @@ Final files:
 
 ```shell
 # template:
-${datetime}.${OUTPUT_FILENAME_BASE}.${size}.${md5}.{ts,mp4} # full
-${OUTPUT_FILENAME_BASE}.${size}.${md5}.{ts,mp4}             # NO_AUTO_PREFIX_DATETIME
-${datetime}.${OUTPUT_FILENAME_BASE}.${md5}.{ts,mp4}         # NO_AUTO_FILESIZE
-${datetime}.${OUTPUT_FILENAME_BASE}.${size}.{ts,mp4}        # NO_AUTO_MD5
+${datetime}.${OUTPUT_FILENAME_BASE}.${size}.${md5}.ts # full
+${OUTPUT_FILENAME_BASE}.${size}.${md5}.ts             # NO_AUTO_PREFIX_DATETIME
+${datetime}.${OUTPUT_FILENAME_BASE}.${md5}.ts         # NO_AUTO_FILESIZE
+${datetime}.${OUTPUT_FILENAME_BASE}.${size}.ts        # NO_AUTO_MD5
 
 # example:
 '20220605T040302Z.name-1st-Otoyk-day0.123456789.0123456789abcdef0123456789abcdef.ts' # full
@@ -182,12 +187,6 @@ services:
       - RTMP_TARGET_URL=     # enable RTMP streaming.
       - RTMP_FFMPEG_USE_LIBX264_ENCODING=  # enable video encoding, otherwise just copy the video stream.
       - RTMP_FFMPEG_CRF=     # CRF value, 23 by detault, see https://trac.ffmpeg.org/wiki/Encode/H.264#a1.ChooseaCRFvalue .
-
-      # MP4 output control
-
-      - NO_TRANSCODE=        # disable FFmpeg transcode.
-
-      - GENERATE_DUMMY_MP4=  # generate a dummy MP4 file when "NO_TRANSCODE" is set.
 
       # uploading control
 
