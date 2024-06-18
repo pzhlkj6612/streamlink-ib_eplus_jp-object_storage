@@ -10,6 +10,11 @@ TZ=UTC printf -v the_datetime '%(%Y%m%dT%H%M%SZ)T' -1
 
 echo "------ the_datetime = ${the_datetime}"
 
+# How do I kill background processes / jobs when my shell script exits? - Stack Overflow
+#   https://stackoverflow.com/a/2173421
+
+trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+
 #############
 # Utilities #
 
