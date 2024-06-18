@@ -160,7 +160,7 @@ services:
       - STREAMLINK_RETRY_TOTAL_SECONDS=  # 42 seconds between attempts, 0 second (no retry) by default.
       - STREAMLINK_RINGBUFFER_SIZE=      # "--ringbuffer-size", 200M by default.
       - STREAMLINK_HLS_START_OFFSET=     # "--hls-start-offset", 00:00:00 by default.
-      - STREAMLINK_OPTIONS=              # options passed into streamlink before all others.
+      - STREAMLINK_OPTIONS=              # options passed into streamlink after all others.
 
       # yt-dlp
       - YTDLP_STREAM_URL=      # enable yt-dlp.
@@ -169,7 +169,7 @@ services:
       - YTDLP_BUFFER_SIZE=     # "--buffer-size", 200M by default.
       - YTDLP_USERNAME=        # "--username", empty by default.
       - YTDLP_PASSWORD=        # "--password", empty by default.
-      - YTDLP_OPTIONS=         # options passed into yt-dlp before all others.
+      - YTDLP_OPTIONS=         # options passed into yt-dlp after all others.
 
       # direct download
       - VIDEO_FILE_URL=  # download a video file.

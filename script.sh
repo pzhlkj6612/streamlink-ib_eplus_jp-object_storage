@@ -40,7 +40,6 @@ fi
 
 streamlink_record_stdout_no_url_no_default_stream_partial_command=(
     'streamlink'
-        ${STREAMLINK_OPTIONS}
         '--plugin-dirs=''/SL-plugins'
         '--stdout'
         '--loglevel=trace'
@@ -49,6 +48,7 @@ streamlink_record_stdout_no_url_no_default_stream_partial_command=(
         '--ringbuffer-size' "${STREAMLINK_RINGBUFFER_SIZE:-200M}"
         '--hls-start-offset' "${STREAMLINK_HLS_START_OFFSET:-00:00:00}"
         '--stream-segment-threads' "${DOWNLOAD_THREAD_NUM:-1}"
+        ${STREAMLINK_OPTIONS}
         # '--url'
         # '--default-stream'
 )
@@ -61,7 +61,6 @@ fi
 
 ytdlp_record_stdout_no_url_no_format_partial_command=(
     'yt-dlp'
-        ${YTDLP_OPTIONS}
         '--output' '-'
         '--verbose'
         '--wait-for-video' "${YTDLP_WAIT_FOR_VIDEO:-19-26}"
@@ -69,6 +68,7 @@ ytdlp_record_stdout_no_url_no_format_partial_command=(
         '--username' "${YTDLP_USERNAME:-}"
         '--password' "${YTDLP_PASSWORD:-}"
         '--concurrent-fragments' "${DOWNLOAD_THREAD_NUM:-1}"
+        ${YTDLP_OPTIONS}
         # '--format'
         # 'URL'
 )
