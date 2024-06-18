@@ -22,7 +22,7 @@ RUN pip install \
         --disable-pip-version-check \
         --no-cache-dir \
         --force-reinstall \
-        'https://github.com/streamlink/streamlink/archive/21569979c4c53061245b02862b5fbd9b42654639.zip'
+        'https://github.com/streamlink/streamlink/archive/7158e6e64822bc9ad1eecf02382136192150212d.zip'
 
 RUN pip install \
         --disable-pip-version-check \
@@ -39,7 +39,7 @@ RUN mkdir '/SL-plugins' && \
     git -C '/SL-plugins' switch --detach 'FETCH_HEAD'
 
 RUN mkdir '/opt/ffmpeg' && \
-    curl -L 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-05-27-12-46/ffmpeg-n7.0.1-3-g1800213575-linux64-gpl-7.0.tar.xz' | \
+    curl -L 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-06-17-12-49/ffmpeg-n7.0.1-6-gf0b747ef1a-linux64-gpl-7.0.tar.xz' | \
         tar -C '/opt/ffmpeg' -f- -x --xz --strip-components=1
 
 ENV PATH="/opt/ffmpeg/bin:${PATH}"
