@@ -12,8 +12,8 @@ echo "------ the_datetime = ${the_datetime}"
 
 # How do I kill background processes / jobs when my shell script exits? - Stack Overflow
 #   https://stackoverflow.com/a/2173421
-
-trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+#   https://stackoverflow.com/q/360201/2173421#comment137830234_2173421
+trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT || true
 
 #############
 # Utilities #
