@@ -155,8 +155,8 @@ services:
       - DOWNLOAD_THREAD_NUM=  # "--stream-segment-threads" for streamlink, "--concurrent-fragments" for yt-dlp
 
       # streamlink
-      - EPLUS_JP_STREAM_URL=             # enable streamlink.
-      - EPLUS_JP_STREAM_QUALITY=         # "best" by default.
+      - STREAMLINK_STREAM_URL=           # enable streamlink.
+      - STREAMLINK_STREAM_QUALITY=       # "best" by default.
       - STREAMLINK_RETRY_TOTAL_SECONDS=  # 42 seconds between attempts, 0 second (no retry) by default.
       - STREAMLINK_RINGBUFFER_SIZE=      # "--ringbuffer-size", 200M by default.
       - STREAMLINK_HLS_START_OFFSET=     # "--hls-start-offset", 00:00:00 by default.
