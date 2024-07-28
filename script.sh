@@ -489,7 +489,11 @@ function main() {
 
     process_stream_and_video "${output_ts_base_path}"
 
-    obtain_calculate_rename_upload "${output_ts_base_path}"
+    if [[ -f "${output_ts_base_path}" ]]; then
+        obtain_calculate_rename_upload "${output_ts_base_path}"
+    else
+        echo 'Downloaded file not found'
+    fi
 }
 
 # ENTRYPOINT #
