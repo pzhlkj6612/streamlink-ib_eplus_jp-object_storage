@@ -169,13 +169,13 @@ function process_stream_and_video() {
         1>"${in_pipe}" \
         dd &
 
-    elif [[ -n "${EPLUS_JP_STREAM_URL}" ]]; then
+    elif [[ -n "${STREAMLINK_STREAM_URL}" ]]; then
         # streamlink --(.ts)-> pipe
 
         streamlink_record_stdout_command=(
             "${streamlink_record_stdout_no_url_no_default_stream_partial_command[@]}"
-            '--url' "${EPLUS_JP_STREAM_URL}"
-            '--default-stream' "${EPLUS_JP_STREAM_QUALITY:-best}"
+            '--url' "${STREAMLINK_STREAM_URL}"
+            '--default-stream' "${STREAMLINK_STREAM_QUALITY:-best}"
         )
 
         1>"${in_pipe}" \
