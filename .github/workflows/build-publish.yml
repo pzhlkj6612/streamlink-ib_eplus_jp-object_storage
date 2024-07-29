@@ -30,7 +30,7 @@ jobs:
     # https://github.blog/changelog/2021-04-19-github-actions-limit-workflow-run-or-job-concurrency/
     concurrency:
       group: std::lock_guard
-    timeout-minutes: 5
+    timeout-minutes: 20
     steps:
       -
         name: Prepare platform info
