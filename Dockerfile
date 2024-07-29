@@ -39,7 +39,12 @@ RUN mkdir '/SL-plugins' && \
     git -C '/SL-plugins' switch --detach 'FETCH_HEAD'
 
 RUN mkdir '/opt/ffmpeg' && \
-    curl -L 'https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-07-27-12-52/ffmpeg-n7.0.1-217-ga83c1a3db9-linux64-gpl-7.0.tar.xz' | \
+    if [[ "$(uname -m)" = 'x86_64' ]]; then \
+        ffmpeg_url='https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-07-27-12-52/ffmpeg-n7.0.1-217-ga83c1a3db9-linux64-gpl-7.0.tar.xz' \
+    else \
+        ffmpeg_url='https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-07-26-12-59/ffmpeg-n7.0.1-217-ga83c1a3db9-linuxarm64-gpl-7.0.tar.xz' \
+    fi && \
+    curl -L "${ffmpeg_url}" | \
         tar -C '/opt/ffmpeg' -f- -x --xz --strip-components=1
 
 ENV PATH="/opt/ffmpeg/bin:${PATH}"
