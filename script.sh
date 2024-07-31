@@ -30,23 +30,11 @@ function test_variable() {
 ############
 # Commands #
 
-if [[ "${STREAMLINK_RETRY_TOTAL_SECONDS:-0}" -gt 0 ]]; then
-    # at least one time
-    retry_attempt_times=$(( "${STREAMLINK_RETRY_TOTAL_SECONDS}" / 42 + ("${STREAMLINK_RETRY_TOTAL_SECONDS}" % 42 == 0 ? 0 : 1) ))
-else
-    retry_attempt_times=0
-fi
-
 streamlink_record_stdout_no_url_no_default_stream_partial_command=(
     'streamlink'
         '--plugin-dirs=''/SL-plugins'
         '--stdout'
         '--loglevel=trace'
-        '--retry-streams' '42'
-        '--retry-max' "${retry_attempt_times}"
-        '--ringbuffer-size' "${STREAMLINK_RINGBUFFER_SIZE:-200M}"
-        '--hls-start-offset' "${STREAMLINK_HLS_START_OFFSET:-00:00:00}"
-        '--stream-segment-threads' "${DOWNLOAD_THREAD_NUM:-1}"
         ${STREAMLINK_OPTIONS}
         # '--url'
         # '--default-stream'
@@ -62,11 +50,6 @@ ytdlp_record_stdout_no_url_no_format_partial_command=(
     'yt-dlp'
         '--output' '-'
         '--verbose'
-        '--wait-for-video' "${YTDLP_WAIT_FOR_VIDEO:-19-26}"
-        '--buffer-size' "${YTDLP_BUFFER_SIZE:-200M}"
-        '--username' "${YTDLP_USERNAME:-}"
-        '--password' "${YTDLP_PASSWORD:-}"
-        '--concurrent-fragments' "${DOWNLOAD_THREAD_NUM:-1}"
         ${YTDLP_OPTIONS}
         # '--format'
         # 'URL'
@@ -196,7 +179,6 @@ function process_stream_and_video() {
 
         ytdlp_record_stdout_command=(
             "${ytdlp_record_stdout_no_url_no_format_partial_command[@]}"
-            '--format' "${YTDLP_QUALITY:-bestvideo*+bestaudio/best}"
             "${YTDLP_STREAM_URL}"
         )
 

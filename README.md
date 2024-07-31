@@ -15,7 +15,7 @@ For a 4-hour live event, the size of a MPEG-TS recording with the best quality i
 
 ### Downloader support
 
-The yt-dlp support is experiment.
+The yt-dlp support is experimental.
 
 ### Output
 
@@ -151,25 +151,14 @@ services:
       # proxy for streamlink and yt-dlp
       - HTTPS_PROXY=http://127.0.0.1:1926  # empty by default.
 
-      # common
-      - DOWNLOAD_THREAD_NUM=  # "--stream-segment-threads" for streamlink, "--concurrent-fragments" for yt-dlp
-
       # streamlink
       - STREAMLINK_STREAM_URL=           # enable streamlink.
       - STREAMLINK_STREAM_QUALITY=       # "best" by default.
-      - STREAMLINK_RETRY_TOTAL_SECONDS=  # 42 seconds between attempts, 0 second (no retry) by default.
-      - STREAMLINK_RINGBUFFER_SIZE=      # "--ringbuffer-size", 200M by default.
-      - STREAMLINK_HLS_START_OFFSET=     # "--hls-start-offset", 00:00:00 by default.
-      - STREAMLINK_OPTIONS=              # options passed into streamlink after all others.
+      - STREAMLINK_OPTIONS=              # options passed into streamlink after default ones; see https://streamlink.github.io/cli.html
 
       # yt-dlp
       - YTDLP_STREAM_URL=      # enable yt-dlp.
-      - YTDLP_QUALITY=         # "--format", "bestvideo*+bestaudio/best" by default.
-      - YTDLP_WAIT_FOR_VIDEO=  # "--wait-for-video", "19-26" by default.
-      - YTDLP_BUFFER_SIZE=     # "--buffer-size", 200M by default.
-      - YTDLP_USERNAME=        # "--username", empty by default.
-      - YTDLP_PASSWORD=        # "--password", empty by default.
-      - YTDLP_OPTIONS=         # options passed into yt-dlp after all others.
+      - YTDLP_OPTIONS=         # options passed into yt-dlp after default ones; see https://github.com/yt-dlp/yt-dlp
 
       # direct download
       - VIDEO_FILE_URL=  # download a video file.
@@ -187,7 +176,7 @@ services:
       - RTMP_TARGET_URL=     # enable RTMP streaming.
       - RTMP_FFMPEG_USE_AAC_ENCODING=      # enable audio re-encoding, otherwise just copy the stream.
       - RTMP_FFMPEG_USE_LIBX264_ENCODING=  # enable video re-encoding, otherwise just copy the stream.
-      - RTMP_FFMPEG_CRF=     # CRF value, 23 by detault, see https://trac.ffmpeg.org/wiki/Encode/H.264#a1.ChooseaCRFvalue .
+      - RTMP_FFMPEG_CRF=     # CRF value for video re-encoding, 23 by default, see https://trac.ffmpeg.org/wiki/Encode/H.264#a1.ChooseaCRFvalue .
 
       # uploading control
 
