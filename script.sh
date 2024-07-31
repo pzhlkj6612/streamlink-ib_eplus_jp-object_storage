@@ -116,6 +116,16 @@ ffmpeg_online_image_generate_still_image_mpegts_video_stdout_command=(
         '-'
 )
 
+if [[ -n "${RTMP_FFMPEG_USE_AAC_ENCODING}" ]]; then
+    ffmpeg_audio_encoding_arguments=(
+        '-c:a' 'aac'
+    )
+else
+    ffmpeg_audio_encoding_arguments=(
+        '-c:a' 'copy'
+    )
+fi
+
 if [[ -n "${RTMP_FFMPEG_USE_LIBX264_ENCODING}" ]]; then
     ffmpeg_video_encoding_arguments=(
         '-c:v' 'libx264'
@@ -138,7 +148,7 @@ ffmpeg_stdin_stream_transcode_flv_rtmp_no_target_url_partial_command=(
         "${ffmpeg_common_global_arguments[@]}"
         '-re'
         '-i' '-'
-        '-c:a' 'copy'
+        "${ffmpeg_audio_encoding_arguments[@]}"
         "${ffmpeg_video_encoding_arguments[@]}"
         '-f' 'flv'
             '-flvflags' 'no_duration_filesize'
