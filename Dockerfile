@@ -22,27 +22,27 @@ RUN pip install \
         --disable-pip-version-check \
         --no-cache-dir \
         --force-reinstall \
-        'https://github.com/streamlink/streamlink/archive/00b8951278be7e5fd326a44792445aaa2fe29655.zip'
+        'https://github.com/streamlink/streamlink/archive/a25de3b26d0f35103811e104c82e8b9eeadb4555.zip'
 
 RUN pip install \
         --disable-pip-version-check \
         --no-cache-dir \
         --force-reinstall \
-        'https://github.com/yt-dlp/yt-dlp/archive/6b1e430d8e4af56cd4fcb8bdc00fca9b79356464.zip'
+        'https://github.com/yt-dlp/yt-dlp/archive/a065086640e888e8d58c615d52ed2f4f4e4c9d18.zip'
 
 # git - How to shallow clone a specific commit with depth 1? - Stack Overflow
 #   https://stackoverflow.com/a/43136160
 RUN mkdir '/SL-plugins' && \
     git -C '/SL-plugins' init && \
     git -C '/SL-plugins' remote add 'origin' 'https://github.com/pmrowla/streamlink-plugins.git' && \
-    git -C '/SL-plugins' fetch --depth=1 'origin' 'c4059774fb880cbf3cbc61789dc2335326429d47' && \
+    git -C '/SL-plugins' fetch --depth=1 'origin' 'fa794c0bd23a6439be9ec313ed71b4050339c752' && \
     git -C '/SL-plugins' switch --detach 'FETCH_HEAD'
 
 RUN mkdir '/opt/ffmpeg' && \
     if [ "$(uname -m)" = 'x86_64' ]; then \
-        ffmpeg_url='https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-07-27-12-52/ffmpeg-n7.0.1-217-ga83c1a3db9-linux64-gpl-7.0.tar.xz'; \
+        ffmpeg_url='https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-08-16-13-46/ffmpeg-n7.0.2-5-g5ff181c025-linux64-gpl-7.0.tar.xz'; \
     else \
-        ffmpeg_url='https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-07-26-12-59/ffmpeg-n7.0.1-217-ga83c1a3db9-linuxarm64-gpl-7.0.tar.xz'; \
+        ffmpeg_url='https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2024-08-16-13-46/ffmpeg-n7.0.2-5-g5ff181c025-linuxarm64-gpl-7.0.tar.xz'; \
     fi && \
     curl -L "${ffmpeg_url}" | \
         tar -C '/opt/ffmpeg' -f- -x --xz --strip-components=1
