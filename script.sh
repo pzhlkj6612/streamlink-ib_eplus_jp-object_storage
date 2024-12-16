@@ -170,7 +170,8 @@ function process_stream_and_video() {
     # Prepare input
 
     in_pipe="$(mktemp -u)"
-    mkfifo --mode=600 "${in_pipe}"
+    mkfifo "${in_pipe}"
+    chmod 600 "${in_pipe}"
 
     if [[ -n "${USE_EXISTING_MPEG_TS_VIDEO_FILE}" ]]; then
         # (.ts)-> pipe
@@ -256,7 +257,8 @@ function process_stream_and_video() {
         fi
 
         copy_ts_pipe="$(mktemp -u)"
-        mkfifo --mode=600 "${copy_ts_pipe}"
+        mkfifo "${copy_ts_pipe}"
+        chmod 600 "${copy_ts_pipe}"
 
         0<"${copy_ts_pipe}" \
         1>"${1}" \
@@ -275,7 +277,8 @@ function process_stream_and_video() {
         )
 
         rtmp_ts_pipe="$(mktemp -u)"
-        mkfifo --mode=600 "${rtmp_ts_pipe}"
+        mkfifo "${rtmp_ts_pipe}"
+        chmod 600 "${rtmp_ts_pipe}"
 
         0<"${rtmp_ts_pipe}" \
         "${ffmpeg_stdin_stream_transcode_flv_rtmp_command[@]}" &
@@ -490,7 +493,7 @@ function obtain_calculate_rename_upload() {
 # ENTRYPOINT #
 
 function main() {
-    output_file_basename="${OUTPUT_FILENAME_BASE:-$(mktemp -u 'XXX')}"
+    output_file_basename="${OUTPUT_FILENAME_BASE:-$(mktemp -u 'XXXXXX')}"
 
     if [[ -z "${NO_AUTO_PREFIX_DATETIME}" ]]; then
         output_file_basename="${the_datetime}.${output_file_basename}"
